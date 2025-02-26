@@ -4,7 +4,6 @@ function outNumAsLink($x)
     // БЫЛО: передавался параметр html_type
     // return '<a href="?content='.$x.(isset($_GET['html_type']) ? '&html_type='.$_GET['html_type'] : '').'">'.$x.'</a>';
 
-    // СТАЛО: html_type больше не передается, ссылка сбрасывает тип верстки
     return '<a href="?content=' . $x . '">' . $x . '</a>';
 }
 
@@ -15,13 +14,11 @@ function outRow($n)
         // БЫЛО: числа не были отдельными ссылками
         // echo '<div class="row-item">' . $n . ' × ' . $i . ' = ' . ($n * $i) . '</div>';
 
-        // СТАЛО: теперь все числа - ссылки
         echo '<div class="row-item">' . outNumAsLink($n) . ' × ' . outNumAsLink($i) . ' = ' . outNumAsLink($n * $i) . '</div>';
     }
 }
 
 
-// Функция для вывода таблицы в блочном формате
 function outDivForm()
 {
     echo '<div class="table-container">';
@@ -39,7 +36,6 @@ function outDivForm()
     echo '</div>';
 }
 
-// Функция для вывода таблицы в табличном формате
 function outTableForm()
 {
     echo '<table class="multiplication-table">';
@@ -59,10 +55,8 @@ function outTableForm()
     echo '</table>';
 }
 
-// Определяем тип верстки
 $html_type = isset($_GET['html_type']) ? $_GET['html_type'] : 'TABLE';
 
-// Определяем текущее выделение меню
 function isSelected($param, $value)
 {
     return (isset($_GET[$param]) && $_GET[$param] == $value) ? ' class="selected"' : '';
