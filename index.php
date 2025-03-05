@@ -1,9 +1,10 @@
 <?php
+// Функция для вывода ссылок или их отсутствия в зависимости от числа
 function outNumAsLink($x)
 {
-    // БЫЛО: передавался параметр html_type
-    // return '<a href="?content='.$x.(isset($_GET['html_type']) ? '&html_type='.$_GET['html_type'] : '').'">'.$x.'</a>';
-
+    if ($x > 9) {
+        return '<span>' . $x . '</span>';
+    }
     return '<a href="?content=' . $x . '">' . $x . '</a>';
 }
 
@@ -11,9 +12,7 @@ function outNumAsLink($x)
 function outRow($n)
 {
     for ($i = 2; $i <= 9; $i++) {
-        // БЫЛО: числа не были отдельными ссылками
         // echo '<div class="row-item">' . $n . ' × ' . $i . ' = ' . ($n * $i) . '</div>';
-
         echo '<div class="row-item">' . outNumAsLink($n) . ' × ' . outNumAsLink($i) . ' = ' . outNumAsLink($n * $i) . '</div>';
     }
 }
@@ -85,20 +84,24 @@ function isSelected($param, $value)
         </nav>
     </header>
 
-    <aside>
-        <ul>
-            <li><a href="?<?= isset($_GET['html_type']) ? 'html_type=' . $_GET['html_type'] : '' ?>"
-                    <?= !isset($_GET['content']) ? 'class="selected"' : '' ?>>Всё</a></li>
-            <?php for ($i = 2; $i <= 9; $i++): ?>
-                <li><a href="?content=<?= $i ?>&html_type=<?= $html_type ?>" <?= isSelected('content', $i) ?>><?= $i ?></a>
-                </li>
-            <?php endfor; ?>
-        </ul>
-    </aside>
+    <div class="container">
+        <aside>
+            <ul>
+                <li><a href="?<?= isset($_GET['html_type']) ? 'html_type=' . $_GET['html_type'] : '' ?>"
+                        <?= !isset($_GET['content']) ? 'class="selected"' : '' ?>>Всё</a></li>
+                <?php for ($i = 2; $i <= 9; $i++): ?>
+                    <li><a href="?content=<?= $i ?>&html_type=<?= $html_type ?>" <?= isSelected('content', $i) ?>><?= $i ?></a>
+                    </li>
+                <?php endfor; ?>
+            </ul>
+        </aside>
 
-    <main>
-        <?php $html_type == 'TABLE' ? outTableForm() : outDivForm(); ?>
-    </main>
+        <main>
+            <?php $html_type == 'TABLE' ? outTableForm() : outDivForm(); ?>
+        </main>
+    </div>
+
+
 
     <footer>
         <?php
